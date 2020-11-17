@@ -2,9 +2,8 @@ from sportsreference.nfl.teams import Teams
 from sportsreference.nfl.schedule import Schedule
 from sportsreference.nfl.boxscore import Boxscore
 from sys import exit
-import TeamAbbreviations as ab
+import Utils.TeamAbbreviations as ab
 from statistics import stdev
-
 
 # Constants
 
@@ -19,7 +18,6 @@ def set_weeks(weeks):
 
 # gets Team object for set team and year
 def getSeason(team, year=__YEAR):
-    print('TEAM: ' + team)
     team_index = ab.get(team)
     if team_index == 'DNE':
         print('ERROR: ' + team + ' not valid')
@@ -44,44 +42,37 @@ def getBoxScoreIndexes(team_info):
         index_list.append(indexesLY[x])
     return index_list
 
-    
-
+# For this function, home = score of team we are compiling for, away = opponent scores
 def getScoreStats(team_info):
     games = getBoxScoreIndexes(team_info)
     scores = {}
     total_score = 0
-    away_score = 0
-    home_score = 0
+    opp_score = 0
+    team_score = 0
     num_home = 0
     num_away = 0
     num_total = 0
-    away_scores = []
-    home_scores = []
+    opp_scores = []
+    team_scores = []
     all_scores = []
     for uri in games:
         game_data = Boxscore(uri)
         if game_data.away_abbreviation.upper() == team_info.abbreviation:
-            points = float(game_data.away_points)
-            away_scores.append(points)
-            all_scores.append(points)
-            away_score = away_score + points
-            total_score = total_score + points
-            num_away = num_away + 1
+            team_scores.append(float(game_data.away_points))
+            opp_scores.append(float(game_data.home_points))
+            team_score = float(game_data.away_points)
+            opp_score = float(game_data.home_points)
         elif game_data.home_abbreviation.upper() == team_info.abbreviation:
-            points = float(game_data.home_points)
-            home_scores.append(points)
-            all_scores.append(points)
-            home_score = home_score + points
-            total_score = total_score + points
-            num_home = num_home + 1
+            team_scores.append(float(game_data.home_points))
+            opp_scores.append(float(game_data.away_points))
+            team_score = float(game_data.home_points)
+            opp_score = float(game_data.away_points)
         num_total = num_total + 1
     
-    scores['home'] = home_score / num_home
-    scores['stdev_home'] = stdev(home_scores)
-    scores['away'] = away_score / num_away
-    scores['stdev_away'] = stdev(away_scores)
-    scores['total'] = total_score / num_total
-    scores['stdev_total'] = stdev(all_scores)
+    scores['team'] = team_score / len(games)
+    scores['stdev_team'] = stdev(team_scores)
+    scores['opp'] = opp_score / len(games)
+    scores['stdev_opp'] = stdev(opp_scores)
     return scores
 
 
