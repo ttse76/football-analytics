@@ -19,6 +19,7 @@ def set_weeks(weeks):
 
 # gets Team object for set team and year
 def getSeason(team, year=__YEAR):
+    print('TEAM: ' + team)
     team_index = ab.get(team)
     if team_index == 'DNE':
         print('ERROR: ' + team + ' not valid')
@@ -74,11 +75,12 @@ def getScoreStats(team_info):
             total_score = total_score + points
             num_home = num_home + 1
         num_total = num_total + 1
-    scores['away'] = away_score / num_away
+    
     scores['home'] = home_score / num_home
-    scores['total'] = total_score / num_total
     scores['stdev_home'] = stdev(home_scores)
+    scores['away'] = away_score / num_away
     scores['stdev_away'] = stdev(away_scores)
+    scores['total'] = total_score / num_total
     scores['stdev_total'] = stdev(all_scores)
     return scores
 

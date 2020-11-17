@@ -38,4 +38,6 @@ def get(team):
     if team in __TEAM_ABBREVIATIONS:
         return __TEAM_ABBREVIATIONS[team]
     else:
-        return 'DNE'
+        if team in __TEAM_ABBREVIATIONS.values():
+            return team
+    return 'DNE'
