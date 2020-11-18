@@ -14,7 +14,13 @@ def set_options():
     util.set_weeks(WEEKS)
 
 if __name__ == '__main__':
+    if len(sys.argv) == 2:
+        WEEKS = int(sys.argv[1])
+    elif len(sys.argv) == 3:
+        WEEKS = int(sys.argv[1])
+        YEAR = int(sys.argv[2])
     set_options()
+
     games_file = open('games.txt', 'r')
     matchups = []
 
@@ -26,21 +32,12 @@ if __name__ == '__main__':
                 sys.exit(1)
         matchups.append(matchup)
     games_file.close()
+    print('Number of Games Simulated: 10000\n\n')
     for match in matchups:
         away_info = util.getSeason(match[0])
         home_info = util.getSeason(match[1])
         results = Models.modelA(away_info, home_info)
-        print('Number of Games Simulated: ' + str(results['num_games']))
         print(match[0] + ' win: ' + str(results['away']) + '%')
         print(match[1] + ' win: ' + str(results['home']) + '%')
         print('Tie: ' + str(results['tie']) + '%')
- 
-    '''
-    home_team_info = util.getSeason(HOME_TEAM)
-    away_team_info = util.getSeason(AWAY_TEAM)
-
-    res = Models.modelA(away_team_info, home_team_info)
-    out(res)
-    '''
-
-
+        print('\n')
