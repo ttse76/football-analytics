@@ -6,8 +6,6 @@ import Models
 
 YEAR = 2020
 WEEKS = 16
-AWAY_TEAM = 'NYJ'
-HOME_TEAM = 'PIT'
 
 def set_options():
     util.set_year(YEAR)
