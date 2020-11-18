@@ -43,37 +43,32 @@ def getBoxScoreIndexes(team_info):
     return index_list
 
 # For this function, home = score of team we are compiling for, away = opponent scores
+
 def getScoreStats(team_info):
     games = getBoxScoreIndexes(team_info)
-    scores = {}
-    total_score = 0
-    opp_score = 0
-    team_score = 0
-    num_home = 0
-    num_away = 0
-    num_total = 0
-    opp_scores = []
+    num_games = len(games)
+    team_total = 0
     team_scores = []
-    all_scores = []
+    opp_total = 0
+    opp_scores = []
+    scores = {}
     for uri in games:
         game_data = Boxscore(uri)
-        if game_data.away_abbreviation.upper() == team_info.abbreviation:
-            team_scores.append(float(game_data.away_points))
-            opp_scores.append(float(game_data.home_points))
-            team_score = float(game_data.away_points)
-            opp_score = float(game_data.home_points)
-        elif game_data.home_abbreviation.upper() == team_info.abbreviation:
-            team_scores.append(float(game_data.home_points))
-            opp_scores.append(float(game_data.away_points))
-            team_score = float(game_data.home_points)
-            opp_score = float(game_data.away_points)
-        num_total = num_total + 1
-    
-    scores['team'] = team_score / len(games)
+        home_points = float(game_data.home_points)
+        away_points = float(game_data.away_points)
+        if game_data.away_abbreviation.upper() == team_info.abbreviation.upper():
+            team_total = team_total + away_points
+            team_scores.append(away_points)
+            opp_total = opp_total + home_points
+            opp_scores.append(home_points)
+        elif game_data.home_abbreviation.upper() == team_info.abbreviation.upper():
+            team_total = team_total + home_points
+            team_scores.append(home_points)
+            opp_total = opp_total + away_points
+            opp_scores.append(away_points)
+
+    scores['team'] = team_total / num_games
     scores['stdev_team'] = stdev(team_scores)
-    scores['opp'] = opp_score / len(games)
+    scores['opp'] = opp_total / num_games
     scores['stdev_opp'] = stdev(opp_scores)
     return scores
-
-
-
