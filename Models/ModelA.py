@@ -1,6 +1,7 @@
 import Utils.StatsUtil as util
 from random import gauss
 
+
 def simGame(away_scores, home_scores):
     away_score = int(round((gauss(away_scores['team'], away_scores['stdev_team']) + gauss(home_scores['opp'], home_scores['stdev_opp']))/2))
     home_score = int(round((gauss(home_scores['team'], home_scores['stdev_team']) + gauss(away_scores['opp'], away_scores['stdev_opp']))/2))
@@ -22,7 +23,6 @@ def simGame(away_scores, home_scores):
             'home': home_score,
             'result': 0
         }
-
 
 def run(away_info, home_info):
     away_scores = util.getScoreStats(away_info)
