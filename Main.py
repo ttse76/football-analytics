@@ -2,10 +2,13 @@ import Utils.StatsUtil as util
 import pandas as pd
 import Utils.TeamAbbreviations as ab
 import sys
-import Models
+import Models.ModelA as a
+
 
 YEAR = 2020
 WEEKS = 16
+AWAY='ARI'
+HOME='SEA'
 
 def set_options():
     util.set_year(YEAR)
@@ -18,7 +21,16 @@ if __name__ == '__main__':
         WEEKS = int(sys.argv[1])
         YEAR = int(sys.argv[2])
     set_options()
+    away_info = util.getSeason(AWAY)
+    home_info = util.getSeason(HOME)
+    results = a.run(away_info, home_info)
+    print(AWAY + ' win: ' + str(results['away']) + '%')
+    print(HOME + ' win: ' + str(results['home']) + '%')
+    print('Tie: ' + str(results['tie']) + '%')
+    print('Avg Score: ' + str(results['away_score']) + ' - ' + str(results['home_score']))
+    print('\n')
 
+    '''
     games_file = open('games.txt', 'r')
     matchups = []
 
@@ -39,3 +51,4 @@ if __name__ == '__main__':
         print(match[1] + ' win: ' + str(results['home']) + '%')
         print('Tie: ' + str(results['tie']) + '%')
         print('\n')
+    '''

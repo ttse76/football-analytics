@@ -9,12 +9,19 @@ from statistics import stdev
 
 __YEAR = 2020
 __NUMWEEKS = 16
+__NUM_GAMES= 10000
 
 def set_year(year):
     __YEAR = year
 
 def set_weeks(weeks):
     __NUMWEEKS = weeks
+
+def set_num_games(num_games):
+    __NUM_GAMES = num_games
+
+def get_num_games():
+    return __NUM_GAMES
 
 # gets Team object for set team and year
 def getSeason(team, year=__YEAR):
