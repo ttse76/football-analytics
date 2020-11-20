@@ -34,9 +34,4 @@ if __name__ == '__main__':
         away_info = util.getSeason(match[0])
         home_info = util.getSeason(match[1])
         results = a.run(away_info, home_info)
-        print(match[0] + ' win: ' + str(results['away']) + '%')
-        print(match[1] + ' win: ' + str(results['home']) + '%')
-        print('Tie: ' + str(results['tie']) + '%')
-        print('Avg Score: ' + str(results['away_score']) + ' - ' + str(results['home_score']))
-        print('\n')
-    
+        a.out(results, match[0], match[1])

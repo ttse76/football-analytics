@@ -50,7 +50,6 @@ def getBoxScoreIndexes(team_info):
     return index_list
 
 # For this function, home = score of team we are compiling for, away = opponent scores
-
 def getScoreStats(team_info):
     games = getBoxScoreIndexes(team_info)
     num_games = len(games)
