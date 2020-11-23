@@ -53,9 +53,19 @@ def getBoxScoreIndexes(team_info):
 def getScoreStats(team_info):
     games = getBoxScoreIndexes(team_info)
     num_games = len(games)
+    num_home = 0
+    num_away = 0
+    home_total=0
+    away_total=0
     team_total = 0
+    home_scores = []
+    away_scores = []
     team_scores = []
     opp_total = 0
+    opp_home = 0
+    opp_away = 0
+    opp_home_scores = []
+    opp_away_scores = []
     opp_scores = []
     scores = {}
     for uri in games:
@@ -65,16 +75,54 @@ def getScoreStats(team_info):
         if game_data.away_abbreviation.upper() == team_info.abbreviation.upper():
             team_total = team_total + away_points
             team_scores.append(away_points)
+            away_scores.append(away_points)
+            away_total = away_total + away_points
             opp_total = opp_total + home_points
+            opp_home = opp_home + home_points
+            opp_home_scores.append(home_points)
             opp_scores.append(home_points)
+            num_home = num_home + 1
         elif game_data.home_abbreviation.upper() == team_info.abbreviation.upper():
             team_total = team_total + home_points
+            home_scores.append(home_points)
+            home_total = home_total + home_points
             team_scores.append(home_points)
             opp_total = opp_total + away_points
             opp_scores.append(away_points)
+            opp_away = opp_away + away_points
+            opp_away_scores.append(away_points)
+            num_away = num_away + 1
 
+    # Points scored at home
+    scores['home'] = home_total / num_home
+
+    # Points socred away
+    scores['away'] = away_total / num_away
+
+    # Standard deviation of home points
+    scores['stdev_home'] = stdev(home_scores)
+
+    # Standard deviation of away points
+    scores['stdev_away'] = stdev(away_scores)
+
+    # Points scored over all games
     scores['team'] = team_total / num_games
+
+    # Standard deviation of all games
     scores['stdev_team'] = stdev(team_scores)
+
+    # Points socred by opponenets
     scores['opp'] = opp_total / num_games
+
+    # standard deviation of points scored by opponents
     scores['stdev_opp'] = stdev(opp_scores)
+
+    # Points scored by opponent when opponent is home (team is away)
+    scores['opp_home'] = opp_home / num_away
+    scores['stdev_opp_home'] = stdev(opp_home_scores)
+
+    # Points scored by opponent when opponenet is away (team is home)
+    scores['opp_away'] = opp_away / num_home
+    scores['stdev_opp_away'] = stdev(opp_away_scores)
+
     return scores
