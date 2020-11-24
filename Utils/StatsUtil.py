@@ -10,6 +10,7 @@ from statistics import stdev
 __YEAR = 2020
 __NUMWEEKS = 16
 __NUM_GAMES= 10000
+__WEEKS_BACK = 0
 
 def set_year(year):
     __YEAR = year
@@ -19,6 +20,9 @@ def set_weeks(weeks):
 
 def set_num_games(num_games):
     __NUM_GAMES = num_games
+
+def set_weeks_back(weeks_back):
+    __WEEKS_BACK = weeks_back
 
 def get_num_games():
     return __NUM_GAMES
@@ -35,9 +39,10 @@ def getSeason(team, year=__YEAR):
 def getBoxScoreIndexes(team_info):
     indexes = team_info.schedule.dataframe.boxscore_index
     games_played = team_info.games_played
+    start_week = games_played - __WEEKS_BACK
     index_list = []
     
-    for x in range(0, min(__NUMWEEKS, games_played)):
+    for x in range(0, min(__NUMWEEKS, start_week)):
         index_list.append(indexes[x])
 
     if len(index_list) == __NUMWEEKS:
@@ -45,7 +50,7 @@ def getBoxScoreIndexes(team_info):
     team_infoLY = getSeason(team_info.abbreviation, __YEAR - 1)
     indexesLY = team_infoLY.schedule.dataframe.boxscore_index
 
-    for x in range(len(indexesLY)-1, games_played - 1, -1):
+    for x in range(len(indexesLY)-1, start_week - 1, -1):
         index_list.append(indexesLY[x])
     return index_list
 

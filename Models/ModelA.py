@@ -33,6 +33,7 @@ def out(results, away, home):
 def run(away_info, home_info):
     away_scores = util.getScoreStats(away_info)
     home_scores = util.getScoreStats(home_info)
+    print('away: ' + str(away_scores) + '\nhome: ' + str(home_scores) + '\n\n')
     home_wins = 0
     away_wins = 0
     home_score = 0

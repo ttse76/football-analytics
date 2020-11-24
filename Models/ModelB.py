@@ -6,7 +6,7 @@ def simGame(away_scores, home_scores):
     away_opp_points = (gauss(home_scores['opp'], home_scores['stdev_opp']) + gauss(home_scores['opp_home'], home_scores['stdev_opp_home'])) / 2
 
     home_points = (gauss(home_scores['team'], home_scores['stdev_team']) + gauss(home_scores['home'], home_scores['stdev_home'])) / 2
-    home_opp_points = gauss(away_scores['opp'], away_scores['stdev_opp']) + gauss(away_scores['opp_away'], away_scores['stdev_opp_away'])
+    home_opp_points = gauss(away_scores['opp'], away_scores['stdev_opp']) + gauss(away_scores['opp_away'], away_scores['stdev_opp_away']) / 2
     away_score = (away_points + away_opp_points) / 2
     home_score = (home_points + home_opp_points) / 2
     if(away_score > home_score):
@@ -38,7 +38,7 @@ def out(results, away, home):
 def run(away_info, home_info):
     away_scores = util.getScoreStats(away_info)
     home_scores = util.getScoreStats(home_info)
-    print('away_scores: ' + str(away_scores) + '\nhome_scores: ' + str(home_scores) + '\n\n')
+    print('away: ' + str(away_scores) + '\nhome: ' + str(home_scores) + '\n\n')
     home_wins = 0
     away_wins = 0
     home_score = 0
