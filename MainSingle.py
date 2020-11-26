@@ -8,8 +8,8 @@ import Models.ModelB as b
 YEAR = 2020
 WEEKS = 16
 
-HOME='DET'
 AWAY='HOU'
+HOME='DET'
 
 models = {
     'a': a,
@@ -43,9 +43,19 @@ if __name__ == '__main__':
     '''
     away_info = util.getSeason(AWAY)
     home_info = util.getSeason(HOME)
-    #resultsA = a.run(away_info, home_info)
-    #print('Model A:\n')
-    #a.out(resultsA, AWAY, HOME)
+
+    '''
+    away_scores = util.getScoreStats(away_info)
+    home_scores = util.getScoreStats(home_info)
+    print(str(away_scores['away']) + ':' + str(away_scores['team']))
+    print(b.calcAdv(away_scores, 'away'))
+    print(str(home_scores['home']) + ':' + str(home_scores['team']))
+    print(b.calcAdv(home_scores, 'home'))
+    '''
+
+    resultsA = a.run(away_info, home_info)
+    print('Model A:\n')
+    a.out(resultsA, AWAY, HOME)
     resultsB = b.run(away_info, home_info)
     print('Model B:\n')
     b.out(resultsB, AWAY, HOME)
