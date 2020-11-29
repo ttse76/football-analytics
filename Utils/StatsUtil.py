@@ -54,7 +54,6 @@ def getBoxScoreIndexes(team_info):
         index_list.append(indexesLY[x])
     return index_list
 
-# For this function, home = score of team we are compiling for, away = opponent scores
 def getScoreStats(team_info):
     games = getBoxScoreIndexes(team_info)
     num_games = len(games)
@@ -98,6 +97,9 @@ def getScoreStats(team_info):
             opp_away = opp_away + away_points
             opp_away_scores.append(away_points)
 
+    # SRS rating for team
+    scores['rating'] = team_info.simple_rating_system
+    
     # Points scored at home
     scores['home'] = home_total / len(home_scores)
 
