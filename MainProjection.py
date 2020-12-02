@@ -64,14 +64,14 @@ def simGames(team_info, team_record, team_div, team_sch):
     }
 
 def out(team, div, rec):
-    print('TEAM: ' + team)
-    print("rec overall: " + rec)
-    print('division: ' + div)
+    print('TEAM: ' + str(team))
+    print("rec overall: " + str(rec))
+    print('division: ' + str(div))
 
 if __name__ == '__main__':
     nyg_res = simGames(util.getSeason('NYG'), NYG_record, NYG_div, NYG_sch)
     out('NYG', nyg_res['div'], nyg_res['record'])
-
+    
     phi_res = simGames(util.getSeason('PHI'), PHI_record, PHI_div, PHI_sch)
     out('PHI', phi_res['div'], phi_res['record'])
 
@@ -80,3 +80,4 @@ if __name__ == '__main__':
 
     phi_res = simGames(util.getSeason('PHI'), PHI_record, PHI_div, PHI_sch)
     out('PHI', phi_res['div'], phi_res['record'])
+    
